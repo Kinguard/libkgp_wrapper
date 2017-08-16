@@ -1,0 +1,26 @@
+Source: libopi-wrapper
+Section: devel
+Priority: extra
+Maintainer: PA Nilsson <pa@openproducts.se>
+Build-Depends: debhelper (>= 8.0.0), cmake,
+	pkg-config,
+	libutils-dev (>= 1.5.1),
+	libkgpnotify-dev,
+	libjsoncpp-dev,
+	libopi-dev (>= 1.6.0),
+	libssl-dev,
+	libutils-dev,
+	libcppunit-dev,
+	libudev-dev,
+	libcrypto++-dev,
+	libcryptsetup-dev,
+	libparted0-dev,
+	libcurl4-gnutls-dev
+Standards-Version: 3.9.4
+
+Package: libopi-wrapper
+Architecture: any
+Depends: ${misc:Depends}, libopi1
+Conflicts:
+Description: Wrapper lib for libopi to grant access for python, ...
+

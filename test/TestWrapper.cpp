@@ -3,39 +3,44 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestWrapper);
 
+void TestWrapper::testSerialNumber()
+{
+    string serial;
+    serial = SerialNumber();
+    printf("\nSERIAL: %s\n",serial.c_str());
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.SerialNumber(),serial);
+}
 
 
 void TestWrapper::testSysType()
 {
-
-    CPPUNIT_ASSERT_EQUAL(SysTypeText(), OPI::sysinfo.SysTypeText[OPI::sysinfo.Type()]);
+    string res;
+    res = SysTypeText();
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.SysTypeText[OPI::sysinfo.Type()],res);
 
 }
 
 void TestWrapper::testStorageDevice()
 {
-
-    CPPUNIT_ASSERT_EQUAL(StorageDevice(), OPI::sysinfo.StorageDevice());
+    string res;
+    res = StorageDevice();
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDevice(),res);
 
 }
 
 void TestWrapper::testStorageDeviceBlock()
 {
-
-    CPPUNIT_ASSERT_EQUAL(StorageDeviceBlock(), OPI::sysinfo.StorageDeviceBlock());
+    string res;
+    res = StorageDeviceBlock();
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDeviceBlock(),res);
 
 }
 
 void TestWrapper::testStorageDevicePartition()
 {
-
-    CPPUNIT_ASSERT_EQUAL(StorageDevicePartition(), OPI::sysinfo.StorageDevicePartition());
-
-}
-
-void TestWrapper::testSerialNumber()
-{
-
-    CPPUNIT_ASSERT_EQUAL(SerialNumber(), OPI::sysinfo.SerialNumber());
+    string res;
+    res = StorageDevicePartition();
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDevicePartition(),res);
 
 }
+

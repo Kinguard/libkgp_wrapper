@@ -1,28 +1,27 @@
 #include "libopi_wrapper.h"
 using namespace OPI;
 
-string SysTypeText()
+const char* SysTypeText()
 {
-    return sysinfo.SysTypeText[sysinfo.Type()];
+    return sysinfo.SysTypeText[sysinfo.Type()].c_str();
 }
 
-
-string StorageDevice()
+const char* StorageDevice()
 {
-    return sysinfo.StorageDevice();
+    return sysinfo.StorageDevice().c_str();
 }
 
-string StorageDeviceBlock()
+const char* StorageDeviceBlock()
 {
-    return sysinfo.StorageDeviceBlock();
+    return sysinfo.StorageDeviceBlock().c_str();
 }
 
-string StorageDevicePartition()
+const char* StorageDevicePartition()
 {
-    return sysinfo.StorageDevicePartition();
+    return sysinfo.StorageDevicePartition().c_str();
 }
 
-string SerialNumber()
+const char* SerialNumber()
 {
-    return sysinfo.SerialNumber();
+    return sysinfo.SerialNumber().c_str();
 }

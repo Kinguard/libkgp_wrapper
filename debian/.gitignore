@@ -1,0 +1,4 @@
+*.log
+*.substvars
+libopi-wrapper
+debhelper-build-stamp
