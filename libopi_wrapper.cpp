@@ -25,3 +25,8 @@ const char* SerialNumber()
 {
     return sysinfo.SerialNumber().c_str();
 }
+
+const char* NetworkDevice()
+{
+    return sysinfo.NetworkDevice().c_str();
+}

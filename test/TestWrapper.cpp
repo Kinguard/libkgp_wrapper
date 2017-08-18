@@ -44,3 +44,11 @@ void TestWrapper::testStorageDevicePartition()
 
 }
 
+void TestWrapper::testNetworkDevice()
+{
+    string res;
+    res = NetworkDevice();
+    //printf("\nNetwork Device: %s\n",res.c_str());
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.NetworkDevice(),res);
+
+}
