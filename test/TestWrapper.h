@@ -15,6 +15,7 @@ class TestWrapper : public TestFixture
     CPPUNIT_TEST(testStorageDevicePartition);
     //CPPUNIT_TEST(testSerialNumber);  // does not read correctly ???
     CPPUNIT_TEST(testNetworkDevice);
+    CPPUNIT_TEST(testType);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -25,4 +26,5 @@ public:
     void testStorageDevicePartition();
     void testSerialNumber();
     void testNetworkDevice();
+    void testType();
 };

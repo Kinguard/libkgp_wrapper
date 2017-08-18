@@ -40,6 +40,16 @@ extern "C" const char* NetworkDevice();
  */
 extern "C" const char* SerialNumber();
 
+/**
+ * @brief Function to check what the currens system is
+ * @return boolean
+ */
+extern "C" bool isPC();
+extern "C" bool isArmada();
+extern "C" bool isOpi();
+extern "C" bool isXu4();
+extern "C" bool isOlimexA20();
+
 
 #endif // LIBOPI_WRAPPER_H
 

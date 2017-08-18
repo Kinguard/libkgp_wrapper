@@ -30,3 +30,28 @@ const char* NetworkDevice()
 {
     return sysinfo.NetworkDevice().c_str();
 }
+
+bool isPC()
+{
+    return sysinfo.isPC();
+}
+
+bool isArmada()
+{
+    return sysinfo.isArmada();
+}
+
+bool isOpi()
+{
+    return sysinfo.isOpi();
+}
+
+bool isXu4()
+{
+    return sysinfo.isXu4();
+}
+
+bool isOlimexA20()
+{
+    return sysinfo.isOlimexA20();
+}

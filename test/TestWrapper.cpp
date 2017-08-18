@@ -52,3 +52,49 @@ void TestWrapper::testNetworkDevice()
     CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.NetworkDevice(),res);
 
 }
+
+void TestWrapper::testType()
+{
+
+    switch( OPI::sysinfo.Type() )
+    {
+    case OPI::SysInfo::TypeArmada:
+        CPPUNIT_ASSERT( isArmada() );
+        CPPUNIT_ASSERT( ! isOpi() );
+        CPPUNIT_ASSERT( ! isXu4() );
+        CPPUNIT_ASSERT( ! isOlimexA20() );
+        CPPUNIT_ASSERT( ! isPC() );
+        break;
+    case OPI::SysInfo::TypeOlimexA20:
+        CPPUNIT_ASSERT( ! isArmada() );
+        CPPUNIT_ASSERT( ! isOpi() );
+        CPPUNIT_ASSERT( ! isXu4() );
+        CPPUNIT_ASSERT( isOlimexA20() );
+        CPPUNIT_ASSERT( ! isPC() );
+        break;
+    case OPI::SysInfo::TypeOpi:
+        CPPUNIT_ASSERT( ! isArmada() );
+        CPPUNIT_ASSERT( isOpi() );
+        CPPUNIT_ASSERT( ! isXu4() );
+        CPPUNIT_ASSERT( ! isOlimexA20() );
+        CPPUNIT_ASSERT( ! isPC() );
+        break;
+    case OPI::SysInfo::TypePC:
+        CPPUNIT_ASSERT( ! isArmada() );
+        CPPUNIT_ASSERT( ! isOpi() );
+        CPPUNIT_ASSERT( ! isXu4() );
+        CPPUNIT_ASSERT( ! isOlimexA20() );
+        CPPUNIT_ASSERT( OPI::SysInfo::isPC() );
+        break;
+    case OPI::SysInfo::TypeXu4:
+        CPPUNIT_ASSERT( ! isArmada() );
+        CPPUNIT_ASSERT( ! isOpi() );
+        CPPUNIT_ASSERT( isXu4() );
+        CPPUNIT_ASSERT( ! isOlimexA20() );
+        CPPUNIT_ASSERT( ! isPC() );
+        break;
+    default:
+        CPPUNIT_FAIL("Unknown system type");
+    }
+
+}
