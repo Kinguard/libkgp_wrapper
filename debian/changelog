@@ -1,3 +1,9 @@
+libopi-wrapper (1.2) vili; urgency=medium
+
+  * Bump version number 
+
+ -- PA Nilsson <pa@openproducts.se>  Mon, 04 Sep 2017 10:24:34 +0200
+
 libopi-wrapper (1.1) vili; urgency=medium
 
   * Added support to read NetworkDevice 
