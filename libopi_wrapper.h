@@ -3,6 +3,10 @@
 
 #include <unistd.h>
 #include <libopi/SysInfo.h>
+#include <libopi/AuthServer.h>
+
+
+/******  Sys Info Wrapper    *********/
 
 /**
  * @brief Get a text representation of the current system
@@ -49,6 +53,15 @@ extern "C" bool isArmada();
 extern "C" bool isOpi();
 extern "C" bool isXu4();
 extern "C" bool isOlimexA20();
+
+/******  Auth Server Wrapper    *********/
+
+/**
+ * @brief SerialNumber Login to OP servers
+ * @return auth-token as string to be used in http headers
+ */
+
+extern "C" const char* Login();
 
 
 #endif // LIBOPI_WRAPPER_H

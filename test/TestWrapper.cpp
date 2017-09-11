@@ -147,3 +147,10 @@ void TestWrapper::testType()
     }
 
 }
+
+void TestWrapper::testLogin()
+{
+    // How can we test this on PC?
+    printf("Test login");
+    printf("Returned JSON: %s",Login());
+}
