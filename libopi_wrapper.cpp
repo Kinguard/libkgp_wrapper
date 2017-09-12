@@ -5,34 +5,40 @@
 
 using namespace OPI;
 
-const char* SysTypeText()
+int SysTypeText(char *buf)
 {
-    return sysinfo.SysTypeText[sysinfo.Type()].c_str();
+    strcpy(buf,sysinfo.SysTypeText[sysinfo.Type()].c_str());
+    return 1;
 }
 
-const char* StorageDevice()
+int StorageDevice(char *buf)
 {
-    return sysinfo.StorageDevice().c_str();
+    strcpy(buf,sysinfo.StorageDevice().c_str());
+    return 1;
 }
 
-const char* StorageDeviceBlock()
+int StorageDeviceBlock(char *buf)
 {
-    return sysinfo.StorageDeviceBlock().c_str();
+    strcpy(buf,sysinfo.StorageDeviceBlock().c_str());
+    return 1;
 }
 
-const char* StorageDevicePartition()
+int StorageDevicePartition(char *buf)
 {
-    return sysinfo.StorageDevicePartition().c_str();
+    strcpy(buf,sysinfo.StorageDevicePartition().c_str());
+    return 1;
 }
 
-const char* SerialNumber()
+int SerialNumber(char *buf)
 {
-    return sysinfo.SerialNumber().c_str();
+    strcpy(buf,sysinfo.SerialNumber().c_str());
+    return 1;
 }
 
-const char* NetworkDevice()
+int NetworkDevice(char *buf)
 {
-    return sysinfo.NetworkDevice().c_str();
+    strcpy(buf,sysinfo.NetworkDevice().c_str());
+    return 1;
 }
 
 bool isPC()
@@ -62,12 +68,12 @@ bool isOlimexA20()
 
 
 /*  Auth Server */
-const char* Login()
+int Login(char *buf)
 {
     Json::Value ret;
-    Json::Value authresponse(Json::objectValue);
+    Json::Value authresponse;
     int resultcode;
-    string unit_id;
+    string unit_id,token;
     Json::FastWriter writer;
 
     if( Utils::File::FileExists(SYSCONFIG_PATH))
@@ -77,22 +83,12 @@ const char* Login()
         unit_id = c.ValueOrDefault("unit_id");
 
     }
-    printf("UNIT ID: %s\n",unit_id.c_str());
     AuthServer auth(unit_id);
-    printf("STEP 2\n");
-    tie(resultcode,ret) = auth.Login();
-    printf("STEP 3\n");
-
-    if( resultcode != 200 )
+    tie(resultcode,authresponse) = auth.Login();
+    if ( resultcode == 200 )
     {
-        throw runtime_error("Unable to authenticate with backend server");
-    }
-    authresponse["status"] = resultcode;
-
-    if (resultcode == 200)
-    {
-        authresponse["auth"] = ret;
+        strcpy(buf,writer.write(authresponse["token"]).c_str());
     }
 
-    return writer.write(authresponse).c_str();
+    return resultcode;
 }

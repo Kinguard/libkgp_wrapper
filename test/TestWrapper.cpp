@@ -43,15 +43,15 @@ void HexDump(const void* data, int len){
 void TestWrapper::testSerialNumber()
 {
 
-    char *strc = strdup( SerialNumber() );
-    string serial = strc;
-    free(strc);
+    char serialbuf[100];
+    SerialNumber(serialbuf);
+    string serial(serialbuf,0,100);
+
     HexDump( serial.c_str(), serial.length() );
-    string t = SerialNumber();
-    HexDump(t.c_str(), t.length() );
+    //string t = SerialNumber();
+    //HexDump(t.c_str(), t.length() );
     //serial = SerialNumber();
     printf("\nSERIAL: %s\n",serial.c_str());
-    printf("\nSERIAL: %s\n",SerialNumber());
     CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.SerialNumber(),serial);
     //CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.SerialNumber().c_str(),SerialNumber());
 }
@@ -59,45 +59,51 @@ void TestWrapper::testSerialNumber()
 
 void TestWrapper::testSysType()
 {
-    string res;
-    res = SysTypeText();
-    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.SysTypeText[OPI::sysinfo.Type()],res);
+    int res;
+    char buf[100];
+    res = SysTypeText(buf);
+    printf("\nSysTypeText: %s\n",buf);
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.SysTypeText[OPI::sysinfo.Type()],string(buf,0,100));
 
 }
 
 void TestWrapper::testStorageDevice()
 {
-    string res;
-    res = StorageDevice();
-    printf("\nStorageDevice: %s\n",res.c_str());
-    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDevice(),res);
+    int res;
+    char buf[100];
+    res = StorageDevice(buf);
+    printf("\nStorageDevice: %s\n",buf);
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDevice(),string(buf,0,100));
 
 }
 
 void TestWrapper::testStorageDeviceBlock()
 {
-    string res;
-    res = StorageDeviceBlock();
-    printf("\nStorageDeviceBlock: %s\n",res.c_str());
-    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDeviceBlock(),res);
+    int res;
+    char buf[100];
+    res = StorageDeviceBlock(buf);
+    printf("\nStorageDeviceBlock: %s\n",buf);
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDeviceBlock(),string(buf,0,100));
 
 }
 
 void TestWrapper::testStorageDevicePartition()
 {
-    string res;
-    res = StorageDevicePartition();
-    printf("\nStorageDevicePartition: %s\n",res.c_str());
-    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDevicePartition(),res);
+    int res;
+    char buf[100];
+    res = StorageDevicePartition(buf);
+    printf("\nStorageDevicePartition: %s\n",buf);
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.StorageDevicePartition(),string(buf,0,100));
 
 }
 
 void TestWrapper::testNetworkDevice()
 {
-    string res;
-    res = NetworkDevice();
-    printf("\nNetwork Device: %s\n",res.c_str());
-    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.NetworkDevice(),res);
+    int res;
+    char buf[100];
+    res = NetworkDevice(buf);
+    printf("\nNetwork Device: %s\n",buf);
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.NetworkDevice(),string(buf,0,100));
 
 }
 
@@ -152,5 +158,8 @@ void TestWrapper::testLogin()
 {
     // How can we test this on PC?
     printf("Test login");
-    printf("Returned JSON: %s",Login());
+    char buf[100];
+    int status;
+    status = Login(buf);
+    printf("status: %d, token: %s",status,buf);
 }
