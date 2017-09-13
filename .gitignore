@@ -1,0 +1,8 @@
+build/
+debian/tmp/
+__pycache__/
+obj-x86_64-linux-gnu/
+debian/libopi-wrapper-dev/
+debian/libopi-wrapper1/
+debian/files
+debian/.debhelper/

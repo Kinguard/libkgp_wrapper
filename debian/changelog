@@ -1,3 +1,9 @@
+libopi-wrapper (1.5) vili; urgency=medium
+
+  * Improved error handling. 
+
+ -- PA Nilsson <pa@openproducts.se>  Wed, 13 Sep 2017 09:20:59 +0200
+
 libopi-wrapper (1.4) vili; urgency=medium
 
   * Updated package naming. 

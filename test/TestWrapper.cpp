@@ -157,9 +157,10 @@ void TestWrapper::testType()
 void TestWrapper::testLogin()
 {
     // How can we test this on PC?
-    printf("Test login");
     char buf[100];
     int status;
     status = Login(buf);
-    printf("status: %d, token: %s",status,buf);
+    printf("Expect Fail here since we most likely do not have secop/authproxy running");
+    CPPUNIT_ASSERT_EQUAL(500,status);
+
 }

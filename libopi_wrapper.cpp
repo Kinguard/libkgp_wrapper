@@ -84,10 +84,18 @@ int Login(char *buf)
 
     }
     AuthServer auth(unit_id);
-    tie(resultcode,authresponse) = auth.Login();
-    if ( resultcode == 200 )
+    try
     {
-        strcpy(buf,writer.write(authresponse["token"]).c_str());
+        tie(resultcode,authresponse) = auth.Login();
+        if ( resultcode == 200 )
+        {
+            strcpy(buf,writer.write(authresponse["token"]).c_str());
+        }
+    }
+    catch (exception& e)
+    {
+        resultcode=500;
+        printf("\nFailed to login, server exception: %s\n",e.what());
     }
 
     return resultcode;
