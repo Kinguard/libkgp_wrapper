@@ -74,7 +74,6 @@ int Login(char *buf)
     Json::Value authresponse;
     int resultcode;
     string unit_id,token;
-    Json::FastWriter writer;
 
     if( Utils::File::FileExists(SYSCONFIG_PATH))
     {
@@ -89,13 +88,12 @@ int Login(char *buf)
         tie(resultcode,authresponse) = auth.Login();
         if ( resultcode == 200 )
         {
-            strcpy(buf,writer.write(authresponse["token"]).c_str());
+            strcpy(buf,authresponse["token"].asString().c_str());
         }
     }
     catch (exception& e)
     {
         resultcode=500;
-        printf("\nFailed to login, server exception: %s\n",e.what());
     }
 
     return resultcode;
