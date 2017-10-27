@@ -1,3 +1,9 @@
+libopi-wrapper (1.7) vili; urgency=medium
+
+  * Refactor auth Login to try using keys on file if at first we fail
+
+ -- Tor Krill <tor@openproducts.se>  Tue, 24 Oct 2017 10:13:44 +0200
+
 libopi-wrapper (1.6) vili; urgency=medium
 
   * Remove "" from returned token in AuthLogin 

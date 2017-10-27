@@ -72,13 +72,12 @@ bool isOlimexA20()
     return sysinfo.isOlimexA20();
 }
 
-
 /*  Auth Server */
 int Login(char *buf)
 {
     Json::Value ret;
     Json::Value authresponse;
-    int resultcode;
+	int resultcode;
     string unit_id,token;
 
     if( Utils::File::FileExists(SYSCONFIG_PATH))
@@ -88,19 +87,32 @@ int Login(char *buf)
         unit_id = c.ValueOrDefault("unit_id");
 
     }
+
     AuthServer auth(unit_id);
     try
     {
-        tie(resultcode,authresponse) = auth.Login();
-        if ( resultcode == 200 )
+		tie(resultcode,authresponse) = auth.Login();
+		if ( resultcode == 200 )
         {
             strcpy(buf,authresponse["token"].asString().c_str());
         }
     }
     catch (exception& e)
     {
-        resultcode=500;
-    }
+		// Try again with keys stored on file, secop might not be running
+		try
+		{
+			tie(resultcode,authresponse) = auth.Login(true);
+			if ( resultcode == 200 )
+			{
+				strcpy(buf,authresponse["token"].asString().c_str());
+			}
+		}
+		catch(exception& e)
+		{
+			resultcode = 500;
+		}
+	}
 
     return resultcode;
 }
