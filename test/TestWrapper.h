@@ -17,6 +17,7 @@ class TestWrapper : public TestFixture
     CPPUNIT_TEST(testNetworkDevice);
     CPPUNIT_TEST(testType);
     CPPUNIT_TEST(testLogin);
+    CPPUNIT_TEST(testBackupRootPath);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -29,4 +30,5 @@ public:
     void testNetworkDevice();
     void testType();
     void testLogin();
+    void testBackupRootPath();
 };

@@ -45,6 +45,13 @@ extern "C" int NetworkDevice(char *buf);
 extern "C" int SerialNumber(char *buf);
 
 /**
+ * @brief BackupRootPath Get base path on where remote FS for backup is mounted.
+ * @return path to use for mount points, i.e. "/mnt/backup"
+ */
+extern "C" int BackupRootPath(char *buf);
+
+
+/**
  * @brief Function to check what the currens system is
  * @return boolean
  */

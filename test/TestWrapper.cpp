@@ -164,3 +164,12 @@ void TestWrapper::testLogin()
     CPPUNIT_ASSERT_EQUAL(500,status);
 
 }
+
+void TestWrapper::testBackupRootPath()
+{
+    int res;
+    char buf[100];
+    res = BackupRootPath(buf);
+    printf("\nBackupRootPath: %s\n",buf);
+    CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.BackupRootPath(),string(buf,0,100));
+}

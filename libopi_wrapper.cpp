@@ -41,6 +41,12 @@ int NetworkDevice(char *buf)
     return 1;
 }
 
+int BackupRootPath(char *buf)
+{
+    strcpy(buf,sysinfo.BackupRootPath().c_str());
+    return 1;
+}
+
 bool isPC()
 {
     return sysinfo.isPC();
