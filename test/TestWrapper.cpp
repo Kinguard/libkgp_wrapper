@@ -1,5 +1,6 @@
 #include "TestWrapper.h"
 #include "libopi/SysInfo.h"
+#include "libopi/SysConfig.h"
 #include "string.h"
 #include <iostream>
 #include <iomanip>
@@ -172,4 +173,78 @@ void TestWrapper::testBackupRootPath()
     res = BackupRootPath(buf);
     printf("\nBackupRootPath: %s\n",buf);
     CPPUNIT_ASSERT_EQUAL(OPI::sysinfo.BackupRootPath(),string(buf,0,100));
+}
+
+void TestWrapper::testGetConfigKeyString()
+{
+    int res;
+    char buf[100];
+    OPI::SysConfig sysConfig;
+    string scope = "webapps";
+    string key = "theme";
+
+    char *c_scope = new char[scope.length() + 1];
+    strcpy(c_scope, scope.c_str());
+
+    char *c_key = new char[key.length() + 1];
+    strcpy(c_key, key.c_str());
+
+    res = GetKeyAsString(c_scope,c_key,buf);
+    printf("\nConfig Webapps 'theme': %s\n",buf);
+    CPPUNIT_ASSERT_EQUAL(sysConfig.GetKeyAsString(scope,key),string(buf,0,100));
+}
+
+void TestWrapper::testGetConfigKeyInt()
+{
+    OPI::SysConfig sysConfig;
+    int res;
+    bool status;
+    string scope = "webapps";
+    string key = "myint";
+
+    char *c_scope = new char[scope.length() + 1];
+    strcpy(c_scope, scope.c_str());
+
+    char *c_key = new char[key.length() + 1];
+    strcpy(c_key, key.c_str());
+
+
+    status = GetKeyAsInt(c_scope,c_key,&res);
+    printf("\nConfig Webapps 'myint': %d\n", res);
+    CPPUNIT_ASSERT_EQUAL(sysConfig.GetKeyAsInt(scope,key),res);
+}
+
+void TestWrapper::testGetConfigKeyBool()
+{
+    int res;
+    bool status;
+
+    string s_res="true";
+    string scope = "webapps";
+    string key_false = "myfalse";
+    string key_true = "mytrue";
+
+    char *c_scope = new char[scope.length() + 1];
+    strcpy(c_scope, scope.c_str());
+
+    char *c_key_false = new char[key_false.length() + 1];
+    strcpy(c_key_false, key_false.c_str());
+
+    char *c_key_true = new char[key_true.length() + 1];
+    strcpy(c_key_true, key_true.c_str());
+
+    status = GetKeyAsBool(c_scope,c_key_false,&res);
+    if(! res) {
+        s_res="false";
+    }
+    printf("\nConfig Webapps 'myfalse': %s\n",s_res.c_str());
+    CPPUNIT_ASSERT(! res);
+
+    s_res="false";
+    status = GetKeyAsBool(c_scope,c_key_true,&res);
+    if(res) {
+        s_res="true";
+    }
+    printf("\nConfig Webapps 'mytrue': %s\n",s_res.c_str());
+
 }

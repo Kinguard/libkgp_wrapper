@@ -18,6 +18,9 @@ class TestWrapper : public TestFixture
     CPPUNIT_TEST(testType);
     CPPUNIT_TEST(testLogin);
     CPPUNIT_TEST(testBackupRootPath);
+    CPPUNIT_TEST(testGetConfigKeyString);
+    CPPUNIT_TEST(testGetConfigKeyInt);
+    CPPUNIT_TEST(testGetConfigKeyBool);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -31,4 +34,8 @@ public:
     void testType();
     void testLogin();
     void testBackupRootPath();
+    void testGetConfigKeyString();
+    void testGetConfigKeyInt();
+    void testGetConfigKeyBool();
+
 };

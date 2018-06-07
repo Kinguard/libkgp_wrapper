@@ -1,3 +1,9 @@
+libopi-wrapper (1.9) vili; urgency=medium
+
+  * Added support for GetConfig 
+
+ -- PA Nilsson <pa@openproducts.se>  Thu, 07 Jun 2018 08:55:56 +0200
+
 libopi-wrapper (1.8) vili; urgency=medium
 
   * Added support for BackupRootPath 
