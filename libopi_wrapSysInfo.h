@@ -1,10 +1,8 @@
-#ifndef LIBOPI_WRAPPER_H
-#define LIBOPI_WRAPPER_H
+#ifndef LIBOPI_WRAPSYSINFO_H
+#define LIBOPI_WRAPSYSINFO_H
 
 #include <unistd.h>
 #include <libopi/SysInfo.h>
-#include <libopi/SysConfig.h>
-#include <libopi/AuthServer.h>
 
 
 /******  Sys Info Wrapper    *********/
@@ -51,23 +49,6 @@ extern "C" int SerialNumber(char *buf);
  */
 extern "C" int BackupRootPath(char *buf);
 
-/**
- * @brief GetKeyAsString Get the value of 'key' in section 'scope' from sysconfig.json
- * @return the value of 'key' in buf as a string
- */
-extern "C" bool GetKeyAsString(char *c_scope, char *c_key, char *buf);
-
-/**
- * @brief GetKeyAsInt Get the value of 'key' in secton 'scope' from sysconfig.json
- * @return the value of 'key' as int
- */
-extern "C" bool GetKeyAsInt(char *c_scope, char *c_key, int *res);
-
-/**
- * @brief GetKeyAsBool Get the value of 'key' in secton 'scope' from sysconfig.json
- * @return the value of 'key' as bool
- */
-extern "C" bool GetKeyAsBool(char *c_scope, char *c_key, int *res);
 
 
 /**
@@ -80,15 +61,7 @@ extern "C" bool isOpi();
 extern "C" bool isXu4();
 extern "C" bool isOlimexA20();
 
-/******  Auth Server Wrapper    *********/
-
-/**
- * @brief SerialNumber Login to OP servers
- * @return auth-token as string to be used in http headers
- */
-
-extern "C" int Login(char *buf);
 
 
-#endif // LIBOPI_WRAPPER_H
+#endif // LIBOPI_WRAPSYSINFO_H
 

@@ -39,12 +39,18 @@ configure_file(
 )
 
 set( headers
-	libopi_wrapper.h
+	libopi_wrapSysInfo.h
+	libopi_wrapSysConfig.h
+	libopi_wrapDnsServer.h
+	libopi_wrapAuthServer.h
 	)
 	
 # Set source list for wrapper 
 set( src
-	libopi_wrapper.cpp
+	libopi_wrapSysInfo.cpp
+	libopi_wrapSysConfig.cpp
+	libopi_wrapDnsServer.cpp
+	libopi_wrapAuthServer.cpp
    )
 
 add_library( ${PROJECT_NAME}_static STATIC ${src} )

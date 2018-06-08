@@ -1,5 +1,8 @@
 #include <cppunit/extensions/HelperMacros.h>
-#include <libopi_wrapper.h>
+#include <libopi_wrapSysInfo.h>
+#include <libopi_wrapSysConfig.h>
+#include <libopi_wrapAuthServer.h>
+#include <libopi_wrapDnsServer.h>
 
 using namespace CppUnit;
 
@@ -17,6 +20,7 @@ class TestWrapper : public TestFixture
     CPPUNIT_TEST(testNetworkDevice);
     CPPUNIT_TEST(testType);
     CPPUNIT_TEST(testLogin);
+    CPPUNIT_TEST(testDnsUpdate);
     CPPUNIT_TEST(testBackupRootPath);
     CPPUNIT_TEST(testGetConfigKeyString);
     CPPUNIT_TEST(testGetConfigKeyInt);
@@ -33,6 +37,7 @@ public:
     void testNetworkDevice();
     void testType();
     void testLogin();
+    void testDnsUpdate();
     void testBackupRootPath();
     void testGetConfigKeyString();
     void testGetConfigKeyInt();

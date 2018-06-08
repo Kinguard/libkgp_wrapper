@@ -157,14 +157,35 @@ void TestWrapper::testType()
 
 void TestWrapper::testLogin()
 {
-    // How can we test this on PC?
     char buf[100];
     int status;
+    printf("Running Auth\n");
     status = Login(buf);
-    printf("Expect Fail here since we most likely do not have secop/authproxy running");
-    CPPUNIT_ASSERT_EQUAL(500,status);
-
+    if( OPI::sysinfo.isPC() && ( status == 500 ) )
+    {
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("Do you have a valid set of login-keys?",200,status);
+    }
+    else
+    {
+        CPPUNIT_ASSERT_EQUAL(200,status);
+    }
 }
+
+void TestWrapper::testDnsUpdate()
+{
+    bool status;
+    printf("Running DNS update\n");
+    status = UpdateDns();
+    if( OPI::sysinfo.isPC() )
+    {
+        CPPUNIT_ASSERT_MESSAGE("Do you have a valid set of login-keys?",status);
+    }
+    else
+    {
+        CPPUNIT_ASSERT(status);
+    }
+}
+
 
 void TestWrapper::testBackupRootPath()
 {
