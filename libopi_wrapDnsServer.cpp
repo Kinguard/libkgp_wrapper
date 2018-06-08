@@ -26,7 +26,12 @@ bool UpdateDns()
 
     try
     {
-        return dns.UpdateDynDNS(unit_id,fqdn);
+        bool res = dns.UpdateDynDNS(unit_id,fqdn);
+        if ( ! res )
+        {
+            logg << Logger::Error << "Failed to update DNS" <<lend;
+        }
+        return res;
     }
     catch (runtime_error& e)
     {
