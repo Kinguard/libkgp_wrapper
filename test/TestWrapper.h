@@ -20,6 +20,7 @@ class TestWrapper : public TestFixture
     CPPUNIT_TEST(testNetworkDevice);
     CPPUNIT_TEST(testType);
     CPPUNIT_TEST(testLogin);
+    CPPUNIT_TEST(testIsLocked);
     CPPUNIT_TEST(testDnsUpdate);
     CPPUNIT_TEST(testBackupRootPath);
     CPPUNIT_TEST(testGetConfigKeyString);
@@ -37,6 +38,7 @@ public:
     void testNetworkDevice();
     void testType();
     void testLogin();
+    void testIsLocked();
     void testDnsUpdate();
     void testBackupRootPath();
     void testGetConfigKeyString();

@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <libopi/SysConfig.h>
 #include <libopi/AuthServer.h>
+#include <libopi/Secop.h>
 
 /******  Auth Server Wrapper    *********/
 
@@ -13,6 +14,6 @@
  */
 
 extern "C" int Login(char *buf);
-
+extern "C" bool isLocked();
 
 #endif // LIBOPI_WRAPAUTHSERVER_H

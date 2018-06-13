@@ -171,6 +171,21 @@ void TestWrapper::testLogin()
     }
 }
 
+void TestWrapper::testIsLocked()
+{
+    printf("Checking if secop is unlocked\n");
+    bool expectLocked=false;
+    string msg = "Expecting secop to be running, is it not?";;
+    if (OPI::sysinfo.isPC() )
+    {
+        // running on PC, do not expect secop to be running.
+        expectLocked=true;
+        msg = "Not expecting secop to be running, is it?";
+    }
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE(msg,expectLocked,isLocked());
+}
+
 void TestWrapper::testDnsUpdate()
 {
     bool status;

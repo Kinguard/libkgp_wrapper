@@ -1,7 +1,25 @@
 #include "libopi_wrapAuthServer.h"
+#include <libutils/Logger.h>
 #include <string.h>
 
 using namespace OPI;
+using namespace Utils;
+
+bool isLocked()
+{
+    Secop::State st = Secop::Unknown;
+
+    try
+    {
+        Secop s;
+        st  = s.Status();
+    }
+    catch( runtime_error& e)
+    {
+        logg << Logger::Notice << "Failed to check status: "<<e.what()<<lend;
+    }
+    return (st == Secop::Uninitialized) || (st == Secop::Unknown);
+}
 
 /*  Auth Server */
 int Login(char *buf)
