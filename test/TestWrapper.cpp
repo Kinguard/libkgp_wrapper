@@ -7,6 +7,11 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestWrapper);
 
+void TestWrapper::setUp()
+{
+}
+
+
 #define NUMCHARS 0x10
 void HexDump(const void* data, int len){
         const unsigned char* buf = static_cast<const unsigned char*>( data );
@@ -163,7 +168,7 @@ void TestWrapper::testLogin()
     status = Login(buf);
     if( OPI::sysinfo.isPC() && ( status == 500 ) )
     {
-        CPPUNIT_ASSERT_EQUAL_MESSAGE("Do you have a valid set of login-keys?",200,status);
+		CPPUNIT_ASSERT_EQUAL_MESSAGE("Is secop available?",200,status);
     }
     else
     {
@@ -176,13 +181,15 @@ void TestWrapper::testIsLocked()
     printf("Checking if secop is unlocked\n");
     bool expectLocked=false;
     string msg = "Expecting secop to be running, is it not?";;
+	/* secop is needed to run on PC as well now... */
+	/*
     if (OPI::sysinfo.isPC() )
     {
         // running on PC, do not expect secop to be running.
         expectLocked=true;
         msg = "Not expecting secop to be running, is it?";
     }
-
+	*/
     CPPUNIT_ASSERT_EQUAL_MESSAGE(msg,expectLocked,isLocked());
 }
 
@@ -193,7 +200,7 @@ void TestWrapper::testDnsUpdate()
     status = UpdateDns();
     if( OPI::sysinfo.isPC() )
     {
-        CPPUNIT_ASSERT_MESSAGE("Do you have a valid set of login-keys?",status);
+		CPPUNIT_ASSERT_MESSAGE("Do you have a valid set of login-keys / secop available?",status);
     }
     else
     {
@@ -215,9 +222,11 @@ void TestWrapper::testGetConfigKeyString()
 {
     int res;
     char buf[100];
-    OPI::SysConfig sysConfig;
-    string scope = "webapps";
-    string key = "theme";
+	OPI::SysConfig sysConfig(true);
+	string scope = "testscope";
+	string key = "mystring";
+	string val = "teststring";
+	sysConfig.PutKey(scope,key,val);
 
     char *c_scope = new char[scope.length() + 1];
     strcpy(c_scope, scope.c_str());
@@ -226,17 +235,20 @@ void TestWrapper::testGetConfigKeyString()
     strcpy(c_key, key.c_str());
 
     res = GetKeyAsString(c_scope,c_key,buf);
-    printf("\nConfig Webapps 'theme': %s\n",buf);
-    CPPUNIT_ASSERT_EQUAL(sysConfig.GetKeyAsString(scope,key),string(buf,0,100));
+	printf("\nConfig %s '%s': %s\n",scope.c_str(),key.c_str(),buf);
+	CPPUNIT_ASSERT_EQUAL(val,string(buf,0,100));
 }
 
 void TestWrapper::testGetConfigKeyInt()
 {
-    OPI::SysConfig sysConfig;
-    int res;
+	OPI::SysConfig sysConfig(true);
+	string scope = "testscope";
+	string key = "myint";
+	int i = 10;
+	sysConfig.PutKey(scope,key,i);
+
+	int res;
     bool status;
-    string scope = "webapps";
-    string key = "myint";
 
     char *c_scope = new char[scope.length() + 1];
     strcpy(c_scope, scope.c_str());
@@ -246,8 +258,8 @@ void TestWrapper::testGetConfigKeyInt()
 
 
     status = GetKeyAsInt(c_scope,c_key,&res);
-    printf("\nConfig Webapps 'myint': %d\n", res);
-    CPPUNIT_ASSERT_EQUAL(sysConfig.GetKeyAsInt(scope,key),res);
+	printf("\nConfig %s '%s': %d\n", scope.c_str(), key.c_str(), res);
+	CPPUNIT_ASSERT_EQUAL(i,res);
 }
 
 void TestWrapper::testGetConfigKeyBool()
@@ -255,10 +267,15 @@ void TestWrapper::testGetConfigKeyBool()
     int res;
     bool status;
 
-    string s_res="true";
-    string scope = "webapps";
+	OPI::SysConfig sysConfig(true);
+
+	string s_res="true";
+	string scope = "testscope";
     string key_false = "myfalse";
     string key_true = "mytrue";
+
+	sysConfig.PutKey(scope,key_false,false);
+	sysConfig.PutKey(scope,key_true,true);
 
     char *c_scope = new char[scope.length() + 1];
     strcpy(c_scope, scope.c_str());
@@ -273,7 +290,7 @@ void TestWrapper::testGetConfigKeyBool()
     if(! res) {
         s_res="false";
     }
-    printf("\nConfig Webapps 'myfalse': %s\n",s_res.c_str());
+	printf("\nConfig %s '%s': %s\n",scope.c_str(),key_false.c_str(),s_res.c_str());
     CPPUNIT_ASSERT(! res);
 
     s_res="false";
@@ -281,6 +298,6 @@ void TestWrapper::testGetConfigKeyBool()
     if(res) {
         s_res="true";
     }
-    printf("\nConfig Webapps 'mytrue': %s\n",s_res.c_str());
+	printf("\nConfig %s '%s': %s\n",scope.c_str(),key_true.c_str(),s_res.c_str());
 
 }

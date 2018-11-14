@@ -30,6 +30,7 @@ class TestWrapper : public TestFixture
     CPPUNIT_TEST_SUITE_END();
 
 public:
+	void setUp();
     void testSysType();
     void testStorageDevice();
     void testStorageDeviceBlock();

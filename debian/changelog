@@ -1,3 +1,9 @@
+libopi-wrapper (1.11) vili; urgency=medium
+
+  * Rebuild for libopi 1.6.44 
+
+ -- PA Nilsson <pa@openproducts.se>  Tue, 13 Nov 2018 13:32:38 +0100
+
 libopi-wrapper (1.10) vili; urgency=medium
 
   * Updated deps on libopi 
