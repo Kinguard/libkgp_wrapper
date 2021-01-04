@@ -1,3 +1,9 @@
+libopi-wrapper (1.12) vili; urgency=medium
+
+  * Buster adaptations
+
+ -- Tor Krill <tor@openproducts.se>  Thu, 29 Aug 2019 15:15:17 +0200
+
 libopi-wrapper (1.11) vili; urgency=medium
 
   * Rebuild for libopi 1.6.44 
