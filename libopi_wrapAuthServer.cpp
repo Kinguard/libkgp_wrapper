@@ -1,72 +1,93 @@
 #include "libopi_wrapAuthServer.h"
+
+#include <libutils/HttpStatusCodes.h>
 #include <libutils/Logger.h>
-#include <string.h>
+#include <cstring>
 
 using namespace OPI;
 using namespace Utils;
+using namespace Utils::HTTP;
+
 
 bool isLocked()
 {
-    Secop::State st = Secop::Unknown;
+	Secop::State st = Secop::Unknown;
 
-    try
-    {
-        Secop s;
-        st  = s.Status();
-    }
-    catch( runtime_error& e)
-    {
-        logg << Logger::Notice << "Failed to check status: "<<e.what()<<lend;
-    }
-    return (st == Secop::Uninitialized) || (st == Secop::Unknown);
+	try
+	{
+		Secop s;
+		st  = s.Status();
+	}
+	catch( runtime_error& e)
+	{
+		logg << Logger::Notice << "wrapper: Failed to check status: "<<e.what()<<lend;
+	}
+	return (st == Secop::Uninitialized) || (st == Secop::Unknown);
 }
 
 /*  Auth Server */
 int Login(char *buf)
 {
-    Json::Value ret;
-    Json::Value authresponse;
-    int resultcode;
-    string unit_id;
-    SysConfig sysConfig;
+	Json::Value ret;
+	Json::Value authresponse;
+	int resultcode = 0;
+	string unit_id;
+	SysConfig sysConfig;
 
+	try
+	{
+		unit_id = sysConfig.GetKeyAsString("hostinfo","unitid");
+	}
+	catch (runtime_error& e)
+	{
+		// no use to try validation without unitid
+		logg << Logger::Notice << "wrapper: Missing unit id" << lend;
+		return 0;
+	}
 
-    try
-    {
-        unit_id = sysConfig.GetKeyAsString("hostinfo","unitid");
-    }
-    catch (runtime_error e)
-    {
-        // no use to try validation without unitid
-        return 0;
-    }
+	AuthServer auth(unit_id,{"https://auth.openproducts.com/",sysConfig.GetKeyAsString("hostinfo","syspubkey"),sysConfig.GetKeyAsString("hostinfo","sysauthkey")});
+	try
+	{
+		tie(resultcode,authresponse) = auth.Login();
 
-    AuthServer auth(unit_id,{"https://auth.openproducts.com/",sysConfig.GetKeyAsString("hostinfo","syspubkey"),sysConfig.GetKeyAsString("hostinfo","sysauthkey")});
-    try
-    {
-        tie(resultcode,authresponse) = auth.Login();
-        if ( resultcode == 200 )
-        {
-            strcpy(buf,authresponse["token"].asString().c_str());
-        }
-    }
-    catch (exception& e)
-    {
-        // Try again with keys stored on file, secop might not be running
-        try
-        {
-            tie(resultcode,authresponse) = auth.Login(true);
-            if ( resultcode == 200 )
-            {
-                strcpy(buf,authresponse["token"].asString().c_str());
-            }
-        }
-        catch(exception& e)
-        {
-            //printf("EXC: %s\n",e.what());
-            resultcode = 500;
-        }
-    }
+		if( resultcode != Status::Ok )
+		{
+			// Try again with keys on file
+			tie(resultcode,authresponse) = auth.Login(true);
+		}
 
-    return resultcode;
+		if ( resultcode == Status::Ok )
+		{
+			strcpy(buf,authresponse["token"].asString().c_str());
+		}
+		else
+		{
+			logg << Logger::Error << "wrapper: Login failed both from file and secop " << resultcode << lend;
+		}
+	}
+	catch (exception& e)
+	{
+		// Try again with keys stored on file, secop might not be running
+		logg << Logger::Notice << "Caugth exception while trying to login " << e.what() << lend;
+
+		try
+		{
+			tie(resultcode,authresponse) = auth.Login(true);
+			if ( resultcode == Status::Ok )
+			{
+				strcpy(buf,authresponse["token"].asString().c_str());
+			}
+			else
+			{
+				logg << Logger::Notice << "wrapper: Login with keys on file failed with " << resultcode << lend;
+			}
+		}
+		catch(exception& e)
+		{
+			logg << Logger::Error << "wrapper: Failed with " << e.what() << lend;
+			resultcode = Status::InternalServerError;
+		}
+	}
+
+	return resultcode;
 }

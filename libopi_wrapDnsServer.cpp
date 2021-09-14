@@ -1,6 +1,6 @@
 #include "libopi_wrapDnsServer.h"
 #include <libutils/Logger.h>
-#include <string.h>
+#include <cstring>
 
 using namespace OPI;
 using namespace Utils;

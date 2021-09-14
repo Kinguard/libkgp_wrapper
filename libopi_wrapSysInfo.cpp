@@ -2,7 +2,7 @@
 #include "libutils/FileUtils.h"
 #include <libutils/ConfigFile.h>
 #include <json/json.h>
-#include <string.h>
+#include <cstring>
 
 using namespace OPI;
 

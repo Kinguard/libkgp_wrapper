@@ -1,5 +1,5 @@
 #include "libopi_wrapSysConfig.h"
-#include <string.h>
+#include <cstring>
 
 using namespace OPI;
 
@@ -13,7 +13,7 @@ bool GetKeyAsString(char *c_scope, char *c_key, char *buf)
     try {
         strcpy(buf,sysConfig.GetKeyAsString(scope,key).c_str());
     }
-    catch (runtime_error e) {
+	catch (runtime_error& e) {
         return false;
     }
     return true;
@@ -28,7 +28,7 @@ bool GetKeyAsInt(char *c_scope, char *c_key, int *res)
     try {
         *res = sysConfig.GetKeyAsInt(scope,key);
     }
-    catch (runtime_error e) {
+	catch (runtime_error& e) {
         return false;
     }
     return true;
@@ -43,7 +43,7 @@ bool GetKeyAsBool(char *c_scope, char *c_key, int *res)
     try {
         *res = sysConfig.GetKeyAsBool(scope,key);
     }
-    catch (runtime_error e) {
+	catch (runtime_error& e) {
         return false;
     }
     return true;
