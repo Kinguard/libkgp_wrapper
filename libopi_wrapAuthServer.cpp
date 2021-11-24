@@ -28,8 +28,8 @@ bool isLocked()
 /*  Auth Server */
 int Login(char *buf)
 {
-	Json::Value ret;
-	Json::Value authresponse;
+	json ret;
+	json authresponse;
 	int resultcode = 0;
 	string unit_id;
 	SysConfig sysConfig;
@@ -58,7 +58,7 @@ int Login(char *buf)
 
 		if ( resultcode == Status::Ok )
 		{
-			strcpy(buf,authresponse["token"].asString().c_str());
+			strcpy(buf,authresponse["token"].get<string>().c_str());
 		}
 		else
 		{
@@ -75,7 +75,7 @@ int Login(char *buf)
 			tie(resultcode,authresponse) = auth.Login(true);
 			if ( resultcode == Status::Ok )
 			{
-				strcpy(buf,authresponse["token"].asString().c_str());
+				strcpy(buf,authresponse["token"].get<string>().c_str());
 			}
 			else
 			{

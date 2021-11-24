@@ -1,7 +1,6 @@
 #include "libopi_wrapSysInfo.h"
 #include "libutils/FileUtils.h"
 #include <libutils/ConfigFile.h>
-#include <json/json.h>
 #include <cstring>
 
 using namespace OPI;

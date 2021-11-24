@@ -6,7 +6,6 @@
 
 using namespace CppUnit;
 
-Json::Reader reader;
 
 
 class TestWrapper : public TestFixture

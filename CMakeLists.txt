@@ -2,12 +2,12 @@ project(opi_wrapper)
 cmake_minimum_required(VERSION 2.8)
 
 include( FindPkgConfig )
-pkg_check_modules ( LIBOPI REQUIRED libopi )
-pkg_check_modules ( LIBJSONCPP REQUIRED jsoncpp )
+pkg_check_modules ( LIBOPI REQUIRED libopi>=1.6.60 )
+find_package(nlohmann_json 3.2.0 REQUIRED)
 
 set (VERSION_MAJOR 1)
-set (VERSION_MINOR 0)
-set (VERSION_PATCH 1)
+set (VERSION_MINOR 18)
+set (VERSION_PATCH 0)
 set (VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
 set (VERSION_FULL "${VERSION}.${VERSION_PATCH}")
 
@@ -25,7 +25,6 @@ endif()
 add_definitions( -std=c++11 )
 
 include_directories("${PROJECT_BINARY_DIR}")
-include_directories ( "${LIBJSONCPP_INCLUDE_DIRS}" )
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/Config.h.in"
