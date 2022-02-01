@@ -1,3 +1,9 @@
+libopi-wrapper (1.18) vigrid; urgency=medium
+
+  * Build for bullseye
+
+ -- Tor Krill <tor@openproducts.se>  Tue, 01 Feb 2022 10:06:06 +0100
+
 libopi-wrapper (1.17) vili; urgency=medium
 
   * Fix retry login when backend reports error
